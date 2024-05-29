@@ -1,8 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Memorabilia" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/lightRed</item>
+        <item name="colorPrimaryVariant">@color/darkColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/lightGray</item>
+        <item name="colorSecondaryVariant">@color/darkColor</item>
+        <item name="colorOnSecondary">@color/lightRed</item>
+        <item name="android:statusBarColor">@color/darkColor</item>
+
+        <item name="android:fontFamily">@font/poppinssemibold</item>
+        <item name="fontFamily">@font/poppinssemibold</item>
+
     </style>
 
     <style name="Theme.Memorabilia" parent="Base.Theme.Memorabilia" />

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Memorabilia</string>
+    <string name="welcome">Welcome to Memorabilia!</string>
+    <string name="button_Currently_Reading">Currently Reading</string>
+    <string name="button_MyBooks">MyBooks</string>
+    <string name="button_Want_To_Read">Want To Read</string>
+    <string name="button_Finished_Reading">Finished Reading</string>
+    <string name="recommended_for_you">Recommended for You</string>
 </resources>
