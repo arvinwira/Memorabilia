@@ -6,4 +6,13 @@
     <string name="button_Want_To_Read">Want To Read</string>
     <string name="button_Finished_Reading">Finished Reading</string>
     <string name="recommended_for_you">Recommended for You</string>
+    <string name="welcome_text">Welcome to Memorabilia</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="title_register">Let\'s get started!</string>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="title_login">Login to Memorabilia</string>
+    <string name="message_login">Please log in to continue your reading journey.</string>
 </resources>
