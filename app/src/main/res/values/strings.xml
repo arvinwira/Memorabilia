@@ -15,4 +15,10 @@
     <string name="password">password</string>
     <string name="title_login">Login to Memorabilia</string>
     <string name="message_login">Please log in to continue your reading journey.</string>
+    <string name="Currently_reading">List of books, you’re currently reading!</string>
+    <string name="Currently_reading_title">Currently Reading</string>
+    <string name="Finished_reading_title">Finished Reading</string>
+    <string name="Finished_reading">Yay! Here are your finished books!</string>
+    <string name="Want_to_read_title">Want To Read</string>
+    <string name="Want_to_read">List of books, you curious about!</string>
 </resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +15,18 @@
         android:theme="@style/Theme.Memorabilia"
         tools:targetApi="31">
         <activity
+            android:name=".Feature.MyBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Feature.FinishedReadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Feature.WantToReadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Feature.CurrentlyReading"
+            android:exported="false" />
+        <activity
             android:name=".login.LoginActivity"
             android:exported="false" />
         <activity
@@ -22,8 +36,8 @@
             android:name=".welcome.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".splashscreen.SplashActivity"
-            android:exported="false" />
+            android:name=".splashscreen.SplashScreenActivity"
+            android:exported="true" />
         <activity
             android:name=".main.MainActivity"
             android:exported="true">
