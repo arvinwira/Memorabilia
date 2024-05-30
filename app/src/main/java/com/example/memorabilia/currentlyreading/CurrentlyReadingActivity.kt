@@ -1,4 +1,4 @@
-package com.example.memorabilia.Feature
+package com.example.memorabilia.currentlyreading
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.memorabilia.R
 
-class CurrentlyReading : AppCompatActivity() {
+class CurrentlyReadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

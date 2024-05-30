@@ -15,16 +15,16 @@
         android:theme="@style/Theme.Memorabilia"
         tools:targetApi="31">
         <activity
-            android:name=".Feature.MyBookActivity"
+            android:name=".mybook.MyBookActivity"
             android:exported="false" />
         <activity
-            android:name=".Feature.FinishedReadingActivity"
+            android:name=".finishedreading.FinishedReadingActivity"
             android:exported="false" />
         <activity
-            android:name=".Feature.WantToReadActivity"
+            android:name=".wanttoread.WantToReadActivity"
             android:exported="false" />
         <activity
-            android:name=".Feature.CurrentlyReading"
+            android:name=".currentlyreading.CurrentlyReadingActivity"
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
@@ -35,11 +35,12 @@
         <activity
             android:name=".welcome.WelcomeActivity"
             android:exported="false" />
-        <activity
-            android:name=".splashscreen.SplashScreenActivity"
-            android:exported="true" />
+
         <activity
             android:name=".main.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".splashscreen.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

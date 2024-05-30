@@ -12,6 +12,7 @@
         <item name="android:fontFamily">@font/poppinssemibold</item>
         <item name="fontFamily">@font/poppinssemibold</item>
 
+
     </style>
 
     <style name="Theme.Memorabilia" parent="Base.Theme.Memorabilia" />
