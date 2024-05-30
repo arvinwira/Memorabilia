@@ -35,12 +35,11 @@
         <activity
             android:name=".welcome.WelcomeActivity"
             android:exported="false" />
-
-        <activity
-            android:name=".main.MainActivity"
-            android:exported="true" />
         <activity
             android:name=".splashscreen.SplashActivity"
+            android:exported="true" />
+        <activity
+            android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
