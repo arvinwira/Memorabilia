@@ -39,46 +39,52 @@
 
         <com.google.android.material.button.MaterialButton
 
-            android:id="@+id/button1"
+            android:id="@+id/button_currently_reading"
+            style="@style/CustomMaterialButton1"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:text="@string/button_Currently_Reading"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintEnd_toStartOf="@+id/button_my_books"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
+            android:id="@+id/button_my_books"
+            style="@style/CustomMaterialButton2"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:text="@string/button_MyBooks"
             android:backgroundTint="@color/darkColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button1"
+            app:layout_constraintStart_toEndOf="@+id/button_currently_reading"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button3"
+            android:id="@+id/button_want_to_read"
+            style="@style/CustomMaterialButton1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:text="@string/button_Want_To_Read"
-            app:layout_constraintEnd_toStartOf="@+id/button4"
+            app:layout_constraintEnd_toStartOf="@+id/button_finished_reading"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button1" />
+            app:layout_constraintTop_toBottomOf="@+id/button_currently_reading" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button4"
+            android:id="@+id/button_finished_reading"
+            style="@style/CustomMaterialButton2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:text="@string/button_Finished_Reading"
             android:backgroundTint="@color/darkColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button3"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintStart_toEndOf="@+id/button_want_to_read"
+            app:layout_constraintTop_toBottomOf="@+id/button_my_books" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -115,12 +121,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
 
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        android:background="@drawable/bottom_navigation_background"
+        app:itemActiveIndicatorStyle="@style/CustomActiveIndicatorStyle"
+        app:itemBackground="@drawable/nav_item_background"
         app:menu="@menu/menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

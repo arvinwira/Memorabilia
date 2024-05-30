@@ -25,9 +25,13 @@ class CurrentlyReadingActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.CurrentlyRecyclerView)
 recyclerView.layoutManager = LinearLayoutManager(this)
 val bookList = listOf(
-    ReadingListAdapter.Book("Title1", "Author1", "ImageUrl1"),
-    ReadingListAdapter.Book("Title2", "Author2", "ImageUrl2"),
-    // Add more books here
+    ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
+    ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
+    ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
+    ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
+    ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
+    ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
+    ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
 )
 recyclerView.adapter = ReadingListAdapter(bookList)
     }

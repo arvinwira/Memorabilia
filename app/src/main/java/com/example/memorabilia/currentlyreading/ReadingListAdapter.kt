@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 
 class ReadingListAdapter(private val list: List<Book>) : RecyclerView.Adapter<ReadingListAdapter.ViewHolder>() {
 
@@ -25,12 +27,14 @@ class ReadingListAdapter(private val list: List<Book>) : RecyclerView.Adapter<Re
         val book = list[position]
         holder.titleTextView.text = book.title
         holder.authorTextView.text = book.author
-        holder.profileImageView.setImageResource(R.drawable.logo) // Replace with your image resource = book.author
-    }
+        Glide.with(holder.itemView.context)
+            .load(book.imageUrl)
+            .transform(CircleCrop())
+            .into(holder.profileImageView)    }
     data class Book(
         val title: String,
         val author: String,
-        val imageUrl: String
+        val imageUrl: Int
     )
     override fun getItemCount() = list.size
 }
