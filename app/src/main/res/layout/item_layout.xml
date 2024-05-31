@@ -6,8 +6,7 @@
     android:background="@drawable/round_corners_item"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:layout_marginTop="32dp"
-    >
+    android:layout_marginTop="32dp">
 
     <ImageView
         android:id="@+id/profileImageView"
