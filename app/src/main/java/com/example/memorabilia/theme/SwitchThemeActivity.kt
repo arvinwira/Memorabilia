@@ -1,13 +1,12 @@
 package com.example.memorabilia.theme
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.memorabilia.R
-import com.example.memorabilia.profile.ProfileActivity
 
 
 class SwitchThemeActivity : AppCompatActivity() {
@@ -27,7 +26,7 @@ class SwitchThemeActivity : AppCompatActivity() {
         val useDarkTheme = sharedPreferences.getBoolean(PREF_DARK_THEME, false)
 
         // Set the theme based on the user's preference
-        setTheme(if (useDarkTheme) R.style.Base_Theme_Memorabilia else R.style.Base_Theme_Memorabilia)
+        setTheme(if (useDarkTheme) R.style.Base_Theme_Memorabilia_Dark else R.style.Base_Theme_Memorabilia)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_switch_theme)
@@ -36,13 +35,16 @@ class SwitchThemeActivity : AppCompatActivity() {
         switchTheme.isChecked = useDarkTheme
 
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
-            // Update the theme preference
-            sharedPreferences.edit().putBoolean(PREF_DARK_THEME, isChecked).apply()
-
-            // Restart the application to apply the new theme
-            val intent = Intent(applicationContext, ProfileActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
+            if (isChecked) {
+                // If the switch is checked, set the theme to dark mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPreferences.edit().putBoolean(PREF_DARK_THEME, true).apply()
+            } else {
+                // If the switch is not checked, set the theme to light mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPreferences.edit().putBoolean(PREF_DARK_THEME, false).apply()
+            }
+            recreate()
         }
     }
 }
