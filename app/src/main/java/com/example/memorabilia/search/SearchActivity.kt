@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.memorabilia.R
 import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
 import com.example.memorabilia.main.MainActivity
+import com.example.memorabilia.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -48,7 +49,7 @@ class SearchActivity : AppCompatActivity() {
                     true
                 }
                 R.id.profilenav -> {
-                    startActivity(Intent(applicationContext, CurrentlyReadingActivity::class.java))
+                    startActivity(Intent(applicationContext, ProfileActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
