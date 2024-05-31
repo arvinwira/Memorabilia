@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.MainActivity">
+    tools:context=".main.MainActivity"
+    android:textColor="?android:textColorPrimary">
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -58,7 +59,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:text="@string/button_MyBooks"
-            android:backgroundTint="@color/darkColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_currently_reading"
             app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +81,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:text="@string/button_Finished_Reading"
-            android:backgroundTint="@color/darkColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_want_to_read"
             app:layout_constraintTop_toBottomOf="@+id/button_my_books" />
@@ -125,6 +124,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
+        style="@style/MyBottomNavigationViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

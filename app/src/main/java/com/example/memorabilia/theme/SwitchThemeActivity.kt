@@ -1,50 +1,45 @@
 package com.example.memorabilia.theme
 
-import android.annotation.SuppressLint
-import android.content.SharedPreferences
+import android.content.Context
 import android.os.Bundle
-import android.widget.Switch
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.memorabilia.R
+import com.example.memorabilia.ViewModelFactory
+import com.google.android.material.switchmaterial.SwitchMaterial
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class SwitchThemeActivity : AppCompatActivity() {
 
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private lateinit var switchTheme: Switch
-    private lateinit var sharedPreferences: SharedPreferences
-
-    companion object {
-        private const val PREFS_NAME = "prefs"
-        private const val PREF_DARK_THEME = "dark_theme"
+    private lateinit var switchTheme: SwitchMaterial
+    private val themeViewModel: ThemeViewModel by viewModels {
+        ViewModelFactory(dataStore)
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        val useDarkTheme = sharedPreferences.getBoolean(PREF_DARK_THEME, false)
-
-        // Set the theme based on the user's preference
-        setTheme(if (useDarkTheme) R.style.Base_Theme_Memorabilia_Dark else R.style.Base_Theme_Memorabilia)
+        themeViewModel.getThemeSettings().observe(this) { isDarkModeActive ->
+            AppCompatDelegate.setDefaultNightMode(
+                if (isDarkModeActive) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
+            )
+        }
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_switch_theme)
 
         switchTheme = findViewById(R.id.switch_theme)
-        switchTheme.isChecked = useDarkTheme
+
+        themeViewModel.getThemeSettings().observe(this) { isDarkModeActive ->
+            switchTheme.isChecked = isDarkModeActive
+        }
 
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // If the switch is checked, set the theme to dark mode
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPreferences.edit().putBoolean(PREF_DARK_THEME, true).apply()
-            } else {
-                // If the switch is not checked, set the theme to light mode
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPreferences.edit().putBoolean(PREF_DARK_THEME, false).apply()
-            }
-            recreate()
+            themeViewModel.saveThemeSetting(isChecked)
         }
     }
 }
