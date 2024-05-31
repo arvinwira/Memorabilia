@@ -23,4 +23,13 @@
     <string name="Want_to_read">List of books, you curious about!</string>
     <string name="title_rv">Title</string>
     <string name="author_rv">Author</string>
+    <string name="profile_title">Profile</string>
+    <string name="name_profile">Name</string>
+    <string name="theme_profile">Theme</string>
+    <string name="changetheme">Change Theme!</string>
+    <string name="about">Information</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="log_out">Log Out</string>
+
 </resources>
