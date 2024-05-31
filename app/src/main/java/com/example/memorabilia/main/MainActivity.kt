@@ -8,6 +8,7 @@ import com.example.memorabilia.R
 import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
 import com.example.memorabilia.finishedreading.FinishedReadingActivity
 import com.example.memorabilia.mybook.MyBookActivity
+import com.example.memorabilia.profile.ProfileActivity
 import com.example.memorabilia.search.SearchActivity
 import com.example.memorabilia.wanttoread.WantToReadActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.profilenav -> {
-                    startActivity(Intent(applicationContext, CurrentlyReadingActivity::class.java))
+                    startActivity(Intent(applicationContext, ProfileActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
