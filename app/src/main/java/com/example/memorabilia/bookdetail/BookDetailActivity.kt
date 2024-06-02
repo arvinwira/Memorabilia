@@ -44,7 +44,7 @@ class BookDetailActivity : AppCompatActivity() {
             bookAuthor ?: "",
             bookImageResId ?: R.drawable.marmut,
             bookSynopsis ?: "",
-            bookRating ?: 0.0f
+            bookRating ?: 0.0f,
         )
         val adapter = BookDetailAdapter(listOf(bookDetail))
         recyclerView.layoutManager = LinearLayoutManager(this)

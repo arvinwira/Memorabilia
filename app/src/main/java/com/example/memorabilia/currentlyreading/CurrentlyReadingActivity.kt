@@ -33,7 +33,6 @@ class CurrentlyReadingActivity : AppCompatActivity() {
         val adapter = ReadingListAdapter(currentlyReadingBooks)
         recyclerView.adapter = adapter
 
-        // Load the books from the database
         val bookDatabase = BookDatabase.getDatabase(this)
         val bookDao = bookDatabase.currentlyReadingBookDao()
         CoroutineScope(Dispatchers.IO).launch {
@@ -66,25 +65,25 @@ class CurrentlyReadingActivity : AppCompatActivity() {
     private val currentlyReadingBooks: MutableList<SearchAdapter.Book> = mutableListOf()
     private lateinit var recyclerView: RecyclerView
     private lateinit var bookDao: CurrentlyReadingBookDao
-        fun moveToWantToRead(position: Int) {
-            val book = currentlyReadingBooks[position]
-            val intent = Intent(this, WantToReadActivity::class.java)
-            intent.putExtra("BOOK_TITLE", book.title)
-            intent.putExtra("BOOK_AUTHOR", book.author)
-            intent.putExtra("BOOK_IMAGE", book.imageUrl)
-            startActivity(intent)
+    fun moveToWantToRead(position: Int) {
+        val book = currentlyReadingBooks[position]
+        val intent = Intent(this, WantToReadActivity::class.java)
+        intent.putExtra("BOOK_TITLE", book.title)
+        intent.putExtra("BOOK_AUTHOR", book.author)
+        intent.putExtra("BOOK_IMAGE", book.imageUrl)
+        startActivity(intent)
 
-            // Remove the book from the currently reading list
-            currentlyReadingBooks.removeAt(position)
-            (recyclerView.adapter as ReadingListAdapter).removeBook(position)
+        // Remove the book from the currently reading list
+        currentlyReadingBooks.removeAt(position)
+        (recyclerView.adapter as ReadingListAdapter).removeBook(position)
 
-            val currentlyReadingBook = CurrentlyReadingBook(0, book.title, book.author, book.imageUrl, "", 0.0f)
+        val currentlyReadingBook = CurrentlyReadingBook(0, book.title, book.author, book.imageUrl, "", 0.0f)
 
-            // Remove the book from the database
-            CoroutineScope(Dispatchers.IO).launch {
-                bookDao.delete(currentlyReadingBook)
-            }
+        // Remove the book from the database
+        CoroutineScope(Dispatchers.IO).launch {
+            bookDao.delete(currentlyReadingBook)
         }
+    }
 
 
 
