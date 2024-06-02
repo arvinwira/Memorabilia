@@ -26,10 +26,11 @@
     <string name="profile_title">Profile</string>
     <string name="name_profile">Name</string>
     <string name="theme_profile">Theme</string>
-    <string name="changetheme">Change Theme!</string>
+    <string name="changetheme">Change Theme</string>
     <string name="about">Information</string>
     <string name="about_us">About Us</string>
     <string name="contact_us">Contact Us</string>
     <string name="log_out">Log Out</string>
-
+    <string name="dark_theme">Dark Theme</string>
+    <string name="setting_title">Settings</string>
 </resources>
