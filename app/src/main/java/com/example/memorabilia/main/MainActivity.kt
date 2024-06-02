@@ -49,16 +49,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.searchnav -> {
                     startActivity(Intent(applicationContext, SearchActivity::class.java))
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     true                }
-                R.id.addnav -> {
-                    startActivity(Intent(applicationContext, CurrentlyReadingActivity::class.java))
-                    overridePendingTransition(0, 0)
-                    true
-                }
+
                 R.id.profilenav -> {
                     startActivity(Intent(applicationContext, ProfileActivity::class.java))
-                    overridePendingTransition(0, 0)
                     true
                 }
                 else -> false
@@ -87,14 +81,6 @@ class MainActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
 
         }
-        val buttonMyBook = findViewById<MaterialButton>(R.id.button_my_books)
-        buttonMyBook.setOnClickListener {
-            val intent = Intent(this, MyBookActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-
-        }
-
 
 
     }

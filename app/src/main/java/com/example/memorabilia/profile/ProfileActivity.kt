@@ -23,26 +23,18 @@ class ProfileActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        // Set Home selected
         bottomNavigationView.selectedItemId = R.id.profilenav
 
-        // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homenav -> {
                     startActivity(Intent(applicationContext, MainActivity::class.java))
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     true
                 }
                 R.id.searchnav -> {
                     startActivity(Intent(applicationContext, SearchActivity::class.java))
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     true                }
-                R.id.addnav -> {
-                    startActivity(Intent(applicationContext, CurrentlyReadingActivity::class.java))
-                    overridePendingTransition(0, 0)
-                    true
-                }
+
                 R.id.profilenav -> {
                     true
                 }

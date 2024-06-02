@@ -38,16 +38,11 @@ class SearchActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.homenav -> {
                     startActivity(Intent(applicationContext, MainActivity::class.java))
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     true
                 }
                 R.id.searchnav -> {
                     true                }
-                R.id.addnav -> {
-                    startActivity(Intent(applicationContext, CurrentlyReadingActivity::class.java))
-                    overridePendingTransition(0, 0)
-                    true
-                }
+
                 R.id.profilenav -> {
                     startActivity(Intent(applicationContext, ProfileActivity::class.java))
                     overridePendingTransition(0, 0)

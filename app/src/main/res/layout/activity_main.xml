@@ -45,45 +45,36 @@
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:text="@string/button_Currently_Reading"
-            app:layout_constraintEnd_toStartOf="@+id/button_my_books"
+            app:layout_constraintEnd_toStartOf="@+id/button_want_to_read"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_my_books"
-            style="@style/CustomMaterialButton2"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="@string/button_MyBooks"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_currently_reading"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_want_to_read"
             style="@style/CustomMaterialButton1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:text="@string/button_Want_To_Read"
-            app:layout_constraintEnd_toStartOf="@+id/button_finished_reading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_currently_reading" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_currently_reading"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_finished_reading"
             style="@style/CustomMaterialButton2"
-            android:layout_width="0dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:text="@string/button_Finished_Reading"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_want_to_read"
-            app:layout_constraintTop_toBottomOf="@+id/button_my_books" />
+            app:layout_constraintTop_toBottomOf="@+id/button_want_to_read" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

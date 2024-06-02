@@ -7,18 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".profile.ProfileActivity">
 
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/ProfileTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="10dp"
-        android:text="@string/profile_title"
+        android:text="@string/setting_title"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toEndOf="@id/logoImageView"
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+         />
+
 
     <LinearLayout
         android:layout_width="11dp"
@@ -29,31 +38,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileTextView"/>
 
-    <TextView
-        android:id="@+id/Name_profileTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/name_profile"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileTextView" />
-
-    <ImageView
-        android:id="@+id/ProfileImageView"
-        android:layout_width="113dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ProfileTextView" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/ProfileImageView"
+        app:layout_constraintTop_toBottomOf="@id/ProfileTextView"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -74,7 +63,7 @@
                 android:textSize="20sp" />
 
             <View
-                android:id="@+id/Profileline"
+                android:id="@+id/Themeline"
                 android:layout_width="70dp"
                 android:layout_height="2dp"
                 android:layout_marginStart="16dp"

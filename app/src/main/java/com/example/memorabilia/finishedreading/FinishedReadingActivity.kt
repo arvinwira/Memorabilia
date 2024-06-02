@@ -24,12 +24,12 @@ class FinishedReadingActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val bookList = listOf(
             ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
-            ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
-            ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
-            ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
-            ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
-            ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
-            ReadingListAdapter.Book("Udang main basket", "Argasi Rizky", R.drawable.marmut),
+            ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
+            ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
+            ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
+            ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
+            ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
+            ReadingListAdapter.Book("Marmut Merah Jambu", "Radit", R.drawable.marmut),
         )
         recyclerView.adapter = FinishedListAdapter(bookList)
     }
