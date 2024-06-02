@@ -10,12 +10,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.memorabilia.R
 
-class SearchAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<SearchAdapter.BookViewHolder>() {
+class SearchAdapter(private var bookList: List<Book>, private val listener: OnItemClickListener) : RecyclerView.Adapter<SearchAdapter.BookViewHolder>() {
+    interface OnItemClickListener {
+        fun onItemClick(book: Book)
+    }
 
-    class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.profileImageView)
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val authorTextView: TextView = itemView.findViewById(R.id.authorTextView)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(bookList[position])
+
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
@@ -43,6 +56,9 @@ class SearchAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<Sea
     data class Book(
         val title: String,
         val author: String,
-        val imageUrl: Int
+        val imageUrl: Int,
+        val synopsis: String,
+        val rating: Float
     )
+
 }

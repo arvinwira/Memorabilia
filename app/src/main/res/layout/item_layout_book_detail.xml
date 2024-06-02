@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/book_cover_image"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:contentDescription="Book Cover Image"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book Title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="by Author Name"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <RatingBar
+        android:id="@+id/book_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="4.5"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/book_synopsis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is the synopsis of the book..."
+        android:textSize="16sp" />
+</LinearLayout>
