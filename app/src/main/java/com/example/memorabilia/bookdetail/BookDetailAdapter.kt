@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.memorabilia.R
+import com.example.memorabilia.search.SearchAdapter
 
-class BookDetailAdapter(private val bookList: List<Book>) : RecyclerView.Adapter<BookDetailAdapter.BookViewHolder>() {
+class BookDetailAdapter(private val bookList: List<SearchAdapter.Book>) : RecyclerView.Adapter<BookDetailAdapter.BookViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_book_detail, parent, false)
@@ -40,11 +41,5 @@ class BookDetailAdapter(private val bookList: List<Book>) : RecyclerView.Adapter
         val ratingBar: RatingBar = itemView.findViewById(R.id.book_rating)
     }
 
-    data class Book(
-        val title: String,
-        val author: String,
-        val imageUrl: Int,
-        val synopsis: String,
-        val rating: Float
-    )
+
 }

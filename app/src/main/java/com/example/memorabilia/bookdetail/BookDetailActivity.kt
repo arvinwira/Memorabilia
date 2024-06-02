@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
 import com.example.memorabilia.finishedreading.FinishedReadingActivity
+import com.example.memorabilia.search.SearchAdapter
 import com.example.memorabilia.wanttoread.WantToReadActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -34,13 +35,13 @@ class BookDetailActivity : AppCompatActivity() {
         buttonManageStatus = findViewById(R.id.button_manage_status)
 
         // Retrieve the book's information passed from SearchActivity
-        val bookTitle = intent.getStringExtra("BOOK_TITLE")
-        val bookAuthor = intent.getStringExtra("BOOK_AUTHOR")
-        val bookSynopsis = intent.getStringExtra("BOOK_SYNOPSIS")
-        val bookRating = intent.getFloatExtra("BOOK_RATING", 0.0f)
-        val bookImageResId = intent.getIntExtra("BOOK_IMAGE", 0)
+        bookTitle = intent.getStringExtra("BOOK_TITLE")
+        bookAuthor = intent.getStringExtra("BOOK_AUTHOR")
+        bookSynopsis = intent.getStringExtra("BOOK_SYNOPSIS")
+        bookRating = intent.getFloatExtra("BOOK_RATING", 0.0f)
+        bookImageResId = intent.getIntExtra("BOOK_IMAGE", 0)
 
-        val bookDetail = BookDetailAdapter.Book(
+        val bookDetail = SearchAdapter.Book(
             bookTitle ?: "",
             bookAuthor ?: "",
             bookImageResId ?: R.drawable.marmut,
@@ -63,7 +64,7 @@ class BookDetailActivity : AppCompatActivity() {
             .create()
 
         dialogView.findViewById<Button>(R.id.btnCurrentlyReading).setOnClickListener {
-            startReadingActivity()
+            currentlyActivity()
             dialog.dismiss()
         }
 
@@ -73,16 +74,23 @@ class BookDetailActivity : AppCompatActivity() {
         }
 
         dialogView.findViewById<Button>(R.id.btnFinishedReading).setOnClickListener {
-            // Handle Finished Reading button click
+            finishedActivity()
             dialog.dismiss()
         }
 
         dialog.show()
     }
 
-    private fun startReadingActivity() {
+    private fun currentlyActivity() {
         val intent = Intent(this, CurrentlyReadingActivity::class.java)
-        // Pass the book data to CurrentlyReadingActivity
+        intent.putExtra("BOOK_TITLE", bookTitle)
+        intent.putExtra("BOOK_AUTHOR", bookAuthor)
+        intent.putExtra("BOOK_IMAGE", bookImageResId)
+        startActivity(intent)
+    }
+
+    private fun finishedActivity() {
+        val intent = Intent(this, WantToReadActivity::class.java)
         intent.putExtra("BOOK_TITLE", bookTitle)
         intent.putExtra("BOOK_AUTHOR", bookAuthor)
         intent.putExtra("BOOK_IMAGE", bookImageResId)
