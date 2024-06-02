@@ -1,11 +1,15 @@
 package com.example.memorabilia.currentlyreading
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.text.InputType
 import com.example.memorabilia.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,10 +23,11 @@ class ReadingListAdapter(private val list: MutableList<SearchAdapter.Book>) : Re
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val authorTextView: TextView = itemView.findViewById(R.id.authorTextView)
         val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
+        val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_currently, parent, false)
         return ViewHolder(view)
     }
 
@@ -44,10 +49,10 @@ class ReadingListAdapter(private val list: MutableList<SearchAdapter.Book>) : Re
         }
     }
 
-        fun removeBook(position: Int) {
-            list.removeAt(position)
-            notifyItemRemoved(position)
-        }
+    fun removeBook(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     override fun getItemCount() = list.size
 }
