@@ -12,6 +12,7 @@ import com.example.memorabilia.currentlyreading.ReadingListAdapter
 import com.example.memorabilia.search.SearchAdapter
 
 class FinishedReadingActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
