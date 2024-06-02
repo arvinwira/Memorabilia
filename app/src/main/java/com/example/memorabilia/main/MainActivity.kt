@@ -13,8 +13,7 @@ import com.example.memorabilia.R
 import com.example.memorabilia.ViewModelFactory
 import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
 import com.example.memorabilia.finishedreading.FinishedReadingActivity
-import com.example.memorabilia.mybook.MyBookActivity
-import com.example.memorabilia.profile.ProfileActivity
+import com.example.memorabilia.settings.SettingsActivity
 import com.example.memorabilia.search.SearchActivity
 import com.example.memorabilia.theme.ThemeViewModel
 import com.example.memorabilia.wanttoread.WantToReadActivity
@@ -49,10 +48,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.searchnav -> {
                     startActivity(Intent(applicationContext, SearchActivity::class.java))
+                    overridePendingTransition(0, 0)
                     true                }
 
                 R.id.profilenav -> {
-                    startActivity(Intent(applicationContext, ProfileActivity::class.java))
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
                     true
                 }
                 else -> false

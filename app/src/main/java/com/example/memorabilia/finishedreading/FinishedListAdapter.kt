@@ -10,8 +10,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.memorabilia.R
 import com.example.memorabilia.currentlyreading.ReadingListAdapter
+import com.example.memorabilia.search.SearchAdapter
 
-class FinishedListAdapter(private val list: List<ReadingListAdapter.Book>) : RecyclerView.Adapter<FinishedListAdapter.ViewHolder>() {
+class FinishedListAdapter(private val list: List<SearchAdapter.Book>) : RecyclerView.Adapter<FinishedListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
@@ -32,10 +33,6 @@ class FinishedListAdapter(private val list: List<ReadingListAdapter.Book>) : Rec
             .load(book.imageUrl)
             .transform(CircleCrop())
             .into(holder.profileImageView)    }
-    data class Book(
-        val title: String,
-        val author: String,
-        val imageUrl: Int
-    )
+
     override fun getItemCount() = list.size
 }

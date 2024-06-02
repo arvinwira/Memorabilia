@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memorabilia.R
 import com.example.memorabilia.bookdetail.BookDetailActivity
-import com.example.memorabilia.bookdetail.BookDetailAdapter
-import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
 import com.example.memorabilia.main.MainActivity
-import com.example.memorabilia.profile.ProfileActivity
+import com.example.memorabilia.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -32,21 +30,20 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        // Set Home selected
         bottomNavigationView.selectedItemId = R.id.searchnav
 
-        // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homenav -> {
                     startActivity(Intent(applicationContext, MainActivity::class.java))
+                    overridePendingTransition(0, 0)
                     true
                 }
                 R.id.searchnav -> {
                     true                }
 
                 R.id.profilenav -> {
-                    startActivity(Intent(applicationContext, ProfileActivity::class.java))
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     overridePendingTransition(0, 0)
                     true
                 }
@@ -56,19 +53,16 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
 
 
 
-        // Initialize RecyclerView and adapter
         recommendationsRecyclerView = findViewById(R.id.rvSearch)
         recommendationsRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = SearchAdapter(dummyBooks, this)
         recommendationsRecyclerView.adapter = adapter
 
-        // Add listener for EditText
         val inputLayout = findViewById<TextInputLayout>(R.id.inputLayout)
         val edSearchUser = findViewById<TextInputEditText>(R.id.edSearchUser)
 
         inputLayout.setEndIconOnClickListener {
             hideKeyboard(it)
-            // Search books based on user input and update adapter
             val books = searchBooks(edSearchUser.text.toString())
             Log.d("SearchActivity", "Found ${books.size} books for query '${edSearchUser.text}'")
             adapter.updateBooks(books)
@@ -101,7 +95,6 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
 
     // Function to search books
     private fun searchBooks(query: String): List<SearchAdapter.Book> {
-        // Return books whose title contains the query
         val books = dummyBooks.filter { it.title.contains(query, ignoreCase = true) }
         Log.d("SearchActivity", "Search result: $books")
         return books
