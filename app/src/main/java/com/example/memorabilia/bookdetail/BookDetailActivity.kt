@@ -12,8 +12,15 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
+import com.example.memorabilia.database.BookDatabase
+import com.example.memorabilia.database.CurrentlyReadingBook
+import com.example.memorabilia.database.WantToReadBook
 import com.example.memorabilia.search.SearchAdapter
 import com.example.memorabilia.wanttoread.WantToReadActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BookDetailActivity : AppCompatActivity() {
 
@@ -40,6 +47,7 @@ class BookDetailActivity : AppCompatActivity() {
         bookImageResId = intent.getIntExtra("BOOK_IMAGE", 0)
 
         val bookDetail = SearchAdapter.Book(
+            0,
             bookTitle ?: "",
             bookAuthor ?: "",
             bookImageResId ?: R.drawable.marmut,
@@ -51,9 +59,12 @@ class BookDetailActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
 
-    // Handle button click to show options
+        // Handle button click to show options
         buttonManageStatus.setOnClickListener { showCustomDialog() }
     }
+
+
+
 
     private fun showCustomDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_manage_status, null)
@@ -80,6 +91,9 @@ class BookDetailActivity : AppCompatActivity() {
         dialog.show()
     }
 
+
+
+
     private fun currentlyActivity() {
         val intent = Intent(this, CurrentlyReadingActivity::class.java)
         // Pass the book data to CurrentlyReadingActivity
@@ -95,21 +109,9 @@ class BookDetailActivity : AppCompatActivity() {
         intent.putExtra("BOOK_AUTHOR", bookAuthor)
         intent.putExtra("BOOK_IMAGE", bookImageResId)
         startActivity(intent)
-        // Get the bookId
-        val bookId = intent.getIntExtra("BOOK_ID", -1)
-        if (bookId != -1) {
-           // currentlyReadingActivity.moveToWantToRead(bookId)
-        }
     }
-    private fun startWantToReadActivity() {
-        val intent = Intent(this, WantToReadActivity::class.java)
-        // Pass the book data to WantToReadActivity
-        intent.putExtra("BOOK_TITLE", bookTitle)
-        intent.putExtra("BOOK_AUTHOR", bookAuthor)
-        intent.putExtra("BOOK_IMAGE", bookImageResId)
-        startActivity(intent)
-
-    }
-
 }
+
+
+
 

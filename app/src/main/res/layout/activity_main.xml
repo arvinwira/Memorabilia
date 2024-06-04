@@ -12,7 +12,7 @@
         android:id="@+id/logoImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +42,9 @@
 
             android:id="@+id/button_currently_reading"
             style="@style/CustomMaterialButton1"
-            app:elevation="64dp"
+            app:layout_constraintWidth_percent="0.45"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:text="@string/button_Currently_Reading"
             app:layout_constraintEnd_toStartOf="@+id/button_want_to_read"
@@ -55,8 +55,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_want_to_read"
             style="@style/CustomMaterialButton1"
+            app:layout_constraintWidth_percent="0.45"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:text="@string/button_Want_To_Read"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,8 +67,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_finished_reading"
             style="@style/CustomMaterialButton2"
+            app:layout_constraintWidth_percent="0.45"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:text="@string/button_Finished_Reading"
             app:layout_constraintStart_toStartOf="parent"

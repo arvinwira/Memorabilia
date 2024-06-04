@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sVAppGuide"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
-    tools:context=".settings.AboutUsActivity">
+    tools:context=".settings.AppGuideActivity">
 
 
 <LinearLayout
@@ -25,10 +26,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/about_us_title"
+            android:id="@+id/app_guide_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about_us"
+            android:text="@string/app_guide"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -57,20 +58,20 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/company_title"
+                    android:id="@+id/overview_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/our_team"
+                    android:text="@string/overview_of_the_app"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/lightRed"
                     android:paddingBottom="4dp"/>
 
                 <TextView
-                    android:id="@+id/company_content"
+                    android:id="@+id/overview_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/our_team_content"
+                    android:text="@string/overview_content"
                     android:textSize="16sp"
                     android:paddingBottom="16dp"/>
             </LinearLayout>
@@ -90,20 +91,20 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/mission_title"
+                    android:id="@+id/search_feature_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/our_mission"
+                    android:text="@string/search_feature"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/lightRed"
                     android:paddingBottom="4dp"/>
 
                 <TextView
-                    android:id="@+id/mission_content"
+                    android:id="@+id/search_feature_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/our_mission_content"
+                    android:text="@string/search_feature_content"
                     android:textSize="16sp"
                     android:paddingBottom="16dp"/>
             </LinearLayout>
@@ -123,20 +124,53 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/vision_title"
+                    android:id="@+id/currently_reading_feature_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/our_vision"
+                    android:text="@string/currently_reading_feature"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/lightRed"
                     android:paddingBottom="4dp"/>
 
                 <TextView
-                    android:id="@+id/vision_content"
+                    android:id="@+id/currently_reading_feature_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/our_vision_content"
+                    android:text="@string/currently_reading_feature_content"
+                    android:textSize="16sp"
+                    android:paddingBottom="16dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/finished_reading_feature_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finished_reading_feature"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightRed"
+                    android:paddingBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/finished_reading_feature_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finished_reading_feature_content"
                     android:textSize="16sp"
                     android:paddingBottom="16dp"/>
             </LinearLayout>

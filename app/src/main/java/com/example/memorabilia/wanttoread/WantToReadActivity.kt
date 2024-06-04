@@ -35,7 +35,7 @@ class WantToReadActivity : AppCompatActivity() {
             val books = bookDao.getAll()
             withContext(Dispatchers.Main) {
                 wantToReadBooks.addAll(books.map {
-                    SearchAdapter.Book(it.title, it.author, it.imageUrl, it.synopsis, it.rating)
+                    SearchAdapter.Book(it.id,it.title, it.author, it.imageUrl, it.synopsis, it.rating)
                 })
                 adapter.notifyDataSetChanged()
             }
@@ -48,7 +48,7 @@ class WantToReadActivity : AppCompatActivity() {
 
 
         if (bookTitle != null && bookAuthor != null && bookImageResId != 0) {
-            val newBook = SearchAdapter.Book(bookTitle, bookAuthor, bookImageResId, "", 0.0f)
+            val newBook = SearchAdapter.Book(0,bookTitle, bookAuthor, bookImageResId, "", 0.0f)
             wantToReadBooks.add(newBook)
             adapter.notifyItemInserted(wantToReadBooks.size - 1)
             val book = WantToReadBook(0, bookTitle, bookAuthor, bookImageResId, "", 0.0f)

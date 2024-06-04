@@ -11,7 +11,7 @@
         android:id="@+id/logoImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -106,13 +106,13 @@
                 android:text="@string/about_us" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/ContactButton"
+                android:id="@+id/AppGuideButton"
                 style="@style/CustomMaterialButton1"
                 android:layout_width="292dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="1dp"
-                android:text="@string/contact_us" />
+                android:text="@string/app_guide" />
             <TextView
                 android:id="@+id/LogoutTextView"
                 android:layout_width="wrap_content"

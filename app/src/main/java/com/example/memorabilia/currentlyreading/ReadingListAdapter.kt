@@ -40,6 +40,8 @@ class ReadingListAdapter(private val list: MutableList<SearchAdapter.Book>) : Re
             .transform(CircleCrop())
             .into(holder.profileImageView)
 
+
+
         holder.itemView.setOnClickListener {
             val intent = Intent(it.context, BookDetailActivity::class.java)
             intent.putExtra("BOOK_TITLE", book.title)

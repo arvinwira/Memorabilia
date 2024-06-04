@@ -39,7 +39,7 @@ class CurrentlyReadingActivity : AppCompatActivity() {
             val books = bookDao.getAll()
             withContext(Dispatchers.Main) {
                 currentlyReadingBooks.addAll(books.map {
-                    SearchAdapter.Book(it.title, it.author, it.imageUrl, it.synopsis, it.rating)
+                    SearchAdapter.Book(it.id,it.title, it.author, it.imageUrl, it.synopsis, it.rating)
                 })
                 adapter.notifyDataSetChanged()
             }
@@ -51,7 +51,7 @@ class CurrentlyReadingActivity : AppCompatActivity() {
         val bookImageResId = intent.getIntExtra("BOOK_IMAGE", 0)
 
         if (bookTitle != null && bookAuthor != null && bookImageResId != 0) {
-            val newBook = SearchAdapter.Book(bookTitle, bookAuthor, bookImageResId, "", 0.0f)
+            val newBook = SearchAdapter.Book(0,bookTitle, bookAuthor, bookImageResId, "", 0.0f)
             currentlyReadingBooks.add(newBook)
             adapter.notifyItemInserted(currentlyReadingBooks.size - 1)
             val book = CurrentlyReadingBook(0, bookTitle, bookAuthor, bookImageResId, "", 0.0f)

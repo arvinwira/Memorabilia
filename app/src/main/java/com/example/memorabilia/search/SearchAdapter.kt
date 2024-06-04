@@ -54,6 +54,7 @@ class SearchAdapter(private var bookList: List<Book>, private val listener: OnIt
     }
 
     data class Book(
+        val id: Int,
         val title: String,
         val author: String,
         val imageUrl: Int,

@@ -36,6 +36,8 @@
             android:fontFamily="@font/poppinsthin"
             android:text="@string/author_rv"
             android:textSize="14sp" />
+        
+
 
     </LinearLayout>
 

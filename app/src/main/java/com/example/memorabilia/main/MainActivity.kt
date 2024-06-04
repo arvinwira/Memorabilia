@@ -20,24 +20,37 @@ import com.example.memorabilia.wanttoread.WantToReadActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.ViewModelProvider
+import com.example.memorabilia.data.Repository
+import com.example.memorabilia.databinding.ActivityMainBinding
+import com.example.memorabilia.di.Injection
+import com.example.memorabilia.welcome.WelcomeActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
 
-    private val themeViewModel: ThemeViewModel by viewModels {
-        ViewModelFactory(dataStore)
+    private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
     }
+    private lateinit var binding: ActivityMainBinding
+
+    private lateinit var repository: Repository
+    private lateinit var themeViewModel: ThemeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
-        themeViewModel.getThemeSettings().observe(this) { isDarkModeActive ->
-            AppCompatDelegate.setDefaultNightMode(
-                if (isDarkModeActive) AppCompatDelegate.MODE_NIGHT_YES
-                else AppCompatDelegate.MODE_NIGHT_NO
-            )
-        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        viewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            }
+        }
+
+        repository = Injection.provideRepository(this)
+        themeViewModel = ViewModelProvider(this, ViewModelFactory(this, repository)).get(ThemeViewModel::class.java)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.homenav

@@ -88,9 +88,9 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
 
     // Create dummy data for books
     val dummyBooks = listOf(
-        SearchAdapter.Book("Marmut Merah Jambu", "Author 1", R.drawable.marmut,"This is the synopsis of Marmut Merah Jambu...", 4.5f),
-        SearchAdapter.Book("Harry Potter", "Author 2", R.drawable.marmut,"This is the synopsis of Harry Potter...", 4.0f),
-        SearchAdapter.Book("Game Of Thrones", "Author 3", R.drawable.marmut,"This is the synopsis of Game Of Thrones...", 4.8f),
+        SearchAdapter.Book(0,"Marmut Merah Jambu", "Author 1", R.drawable.marmut,"This is the synopsis of Marmut Merah Jambu...", 4.5f),
+        SearchAdapter.Book(1,"Harry Potter", "Author 2", R.drawable.marmut,"This is the synopsis of Harry Potter...", 4.0f),
+        SearchAdapter.Book(2,"Game Of Thrones", "Author 3", R.drawable.marmut,"This is the synopsis of Game Of Thrones...", 4.8f),
     )
 
     // Function to search books
@@ -106,6 +106,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
 
     override fun onItemClick(book: SearchAdapter.Book) {
         val intent = Intent(this, BookDetailActivity::class.java).apply {
+            putExtra("BOOK_ID", book.id)
             putExtra("BOOK_TITLE", book.title)
             putExtra("BOOK_AUTHOR", book.author)
             putExtra("BOOK_IMAGE", book.imageUrl)
