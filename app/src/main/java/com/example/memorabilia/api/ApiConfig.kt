@@ -28,4 +28,17 @@ object ApiConfig {
         return retrofit.create(ApiService::class.java)
     }
 
+    fun getNewsApi(): ApiService {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://newsapi.org/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().build())
+            .build()
+        return retrofit.create(ApiService::class.java)
+    }
+
+
+
+
+
 }

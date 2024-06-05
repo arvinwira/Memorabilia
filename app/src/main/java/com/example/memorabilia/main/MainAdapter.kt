@@ -1,6 +1,5 @@
-package com.example.memorabilia.search
+package com.example.memorabilia.main
 
-import com.example.memorabilia.R
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -11,12 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.memorabilia.R
 import com.example.memorabilia.api.response.Article
-import com.example.memorabilia.bookdetail.BookDetailActivity
 
-//import com.example.memorabilia.bookdetail.BookDetailActivity
-
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ArticleViewHolder>() {
+class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
     private var articles: List<Article> = listOf()
 
     fun setData(articles: List<Article>) {
@@ -38,9 +35,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ArticleViewHolder>() {
             .apply(RequestOptions().placeholder(R.drawable.ic_launcher_background))
             .into(holder.articleImageView)
         holder.itemView.setOnClickListener {
-            val intent = Intent(it.context, BookDetailActivity::class.java)
-            intent.putExtra("article", article)
-            it.context.startActivity(intent)
+//            val intent = Intent(it.context, DetailActivity::class.java)
+//            intent.putExtra("article", article)
+//            it.context.startActivity(intent)
         }
     }
 
@@ -52,5 +49,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ArticleViewHolder>() {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val authorTextView: TextView = itemView.findViewById(R.id.authorTextView)
         val articleImageView: ImageView = itemView.findViewById(R.id.bookImageView)
+
     }
 }

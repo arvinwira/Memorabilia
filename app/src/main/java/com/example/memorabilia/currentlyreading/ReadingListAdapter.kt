@@ -1,5 +1,5 @@
 package com.example.memorabilia.currentlyreading
-
+/*
 import android.app.AlertDialog
 import android.content.Intent
 import android.text.InputType
@@ -58,3 +58,4 @@ class ReadingListAdapter(private val list: MutableList<SearchAdapter.Book>) : Re
 
     override fun getItemCount() = list.size
 }
+*/

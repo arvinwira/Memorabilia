@@ -3,32 +3,41 @@ package com.example.memorabilia.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.memorabilia.R
 import com.example.memorabilia.ViewModelFactory
-import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
-import com.example.memorabilia.finishedreading.FinishedReadingActivity
-import com.example.memorabilia.settings.SettingsActivity
-import com.example.memorabilia.search.SearchActivity
-import com.example.memorabilia.theme.ThemeViewModel
-import com.example.memorabilia.wanttoread.WantToReadActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButton
-import androidx.datastore.preferences.core.Preferences
-import androidx.lifecycle.ViewModelProvider
+import com.example.memorabilia.api.ApiConfig
+import com.example.memorabilia.api.ApiService
+import com.example.memorabilia.api.response.NewsResponse
 import com.example.memorabilia.data.Repository
 import com.example.memorabilia.databinding.ActivityMainBinding
 import com.example.memorabilia.di.Injection
+import com.example.memorabilia.search.SearchActivity
+import com.example.memorabilia.settings.SettingsActivity
+import com.example.memorabilia.theme.ThemeViewModel
 import com.example.memorabilia.welcome.WelcomeActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Response
+import java.util.Locale
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var apiService: ApiService
+    private lateinit var adapter: MainAdapter
 
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
@@ -37,11 +46,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var repository: Repository
     private lateinit var themeViewModel: ThemeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        // Initialize binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Check if the user is logged in
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
@@ -49,21 +63,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        repository = Injection.provideRepository(this)
-        themeViewModel = ViewModelProvider(this, ViewModelFactory(this, repository)).get(ThemeViewModel::class.java)
+        // Setup RecyclerView
+        val recyclerView = binding.recommendationsRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = MainAdapter()
+        recyclerView.adapter = adapter
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        // Initialize ApiService
+        apiService = ApiConfig.getNewsApi()
+
+        // Setup BottomNavigationView
+        val bottomNavigationView = binding.bottomNavigation
         bottomNavigationView.selectedItemId = R.id.homenav
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.homenav -> {
-                    true
-                }
+                R.id.homenav -> true
                 R.id.searchnav -> {
                     startActivity(Intent(applicationContext, SearchActivity::class.java))
                     overridePendingTransition(0, 0)
-                    true                }
-
+                    true
+                }
                 R.id.profilenav -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     overridePendingTransition(0, 0)
@@ -73,29 +92,63 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val buttonCurrentlyReading = findViewById<MaterialButton>(R.id.button_currently_reading)
+        // Uncomment the following if you want to use these buttons
+        /*
+        val buttonCurrentlyReading = binding.buttonCurrentlyReading
         buttonCurrentlyReading.setOnClickListener {
             val intent = Intent(this, CurrentlyReadingActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        val buttonWantToRead = findViewById<MaterialButton>(R.id.button_want_to_read)
+        val buttonWantToRead = binding.buttonWantToRead
         buttonWantToRead.setOnClickListener {
             val intent = Intent(this, WantToReadActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
         }
 
-        val buttonFinished = findViewById<MaterialButton>(R.id.button_finished_reading)
+        val buttonFinished = binding.buttonFinishedReading
         buttonFinished.setOnClickListener {
             val intent = Intent(this, FinishedReadingActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-
         }
+        */
 
+        showCategorySelectionDialog()
+    }
 
+    private fun showCategorySelectionDialog() {
+        val categories = arrayOf("kamal", "Business", "Technology", "Entertainment", "Sports", "Health")
+        val selectedCategories = BooleanArray(categories.size)
+        AlertDialog.Builder(this)
+            .setTitle("Select News Categories")
+            .setMultiChoiceItems(categories, selectedCategories) { _, _, _ -> }
+            .setPositiveButton("OK") { _, _ ->
+                val selected = categories.filterIndexed { index, _ -> selectedCategories[index] }
+                val query = selected.joinToString("+").toLowerCase(Locale.ROOT)
+                searchArticles(query)
+            }
+            .show()
+    }
+
+    private fun searchArticles(query: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response: Response<NewsResponse> = apiService.searchArticles(query, "db03c64333b7461da81b46755c01d5dc")
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        adapter.setData(it.articles)
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

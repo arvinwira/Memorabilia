@@ -13,12 +13,12 @@ import com.example.memorabilia.database.BookDatabase
 import com.example.memorabilia.database.CurrentlyReadingBook
 import com.example.memorabilia.database.CurrentlyReadingBookDao
 import com.example.memorabilia.search.SearchAdapter
-import com.example.memorabilia.wanttoread.WantToReadActivity
+//import com.example.memorabilia.wanttoread.WantToReadActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+/*
 class CurrentlyReadingActivity : AppCompatActivity() {
 
 
@@ -88,3 +88,4 @@ class CurrentlyReadingActivity : AppCompatActivity() {
 
 
 }
+*/

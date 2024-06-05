@@ -1,5 +1,5 @@
 package com.example.memorabilia.finishedreading
-
+/*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,3 +36,4 @@ class FinishedListAdapter(private val list: List<SearchAdapter.Book>) : Recycler
 
     override fun getItemCount() = list.size
 }
+*/

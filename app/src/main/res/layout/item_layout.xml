@@ -9,7 +9,7 @@
     android:layout_marginTop="32dp">
 
     <ImageView
-        android:id="@+id/profileImageView"
+        android:id="@+id/bookImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitCenter"

@@ -8,24 +8,40 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memorabilia.R
-import com.example.memorabilia.bookdetail.BookDetailActivity
+import com.example.memorabilia.api.ApiConfig
+import com.example.memorabilia.api.ApiService
+import com.example.memorabilia.api.response.NewsResponse
+//import com.example.memorabilia.bookdetail.BookDetailActivity
 import com.example.memorabilia.main.MainActivity
 import com.example.memorabilia.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Response
+import java.util.Random
 
-class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
-    private lateinit var recommendationsRecyclerView: RecyclerView
+class SearchActivity : AppCompatActivity() {
+
+    private lateinit var apiService: ApiService
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SearchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        apiService = ApiConfig.getNewsApi()
 
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -53,67 +69,55 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnItemClickListener {
 
 
 
-        recommendationsRecyclerView = findViewById(R.id.rvSearch)
-        recommendationsRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = SearchAdapter(dummyBooks, this)
-        recommendationsRecyclerView.adapter = adapter
+        val recyclerView = findViewById<RecyclerView>(R.id.rvSearch)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = SearchAdapter()
+        recyclerView.adapter = adapter
 
-        val inputLayout = findViewById<TextInputLayout>(R.id.inputLayout)
-        val edSearchUser = findViewById<TextInputEditText>(R.id.edSearchUser)
-
-        inputLayout.setEndIconOnClickListener {
-            hideKeyboard(it)
-            val books = searchBooks(edSearchUser.text.toString())
-            Log.d("SearchActivity", "Found ${books.size} books for query '${edSearchUser.text}'")
-            adapter.updateBooks(books)
-        }
-
-        edSearchUser.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing
+        val searchEditText = findViewById<EditText>(R.id.edSearchBook)
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val query = s.toString()
+                searchArticles(query)
             }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // Do nothing
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No action needed here
             }
 
-            override fun afterTextChanged(s: Editable) {
-                // Search books based on user input and update adapter
-                val books = searchBooks(s.toString())
-                Log.d("SearchActivity", "Found ${books.size} books for query '${s.toString()}'")
-                adapter.updateBooks(books)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // No action needed here
             }
         })
+
+        // Fetch random articles on app start
+        val randomQueries = listOf("world", "business", "technology", "entertainment", "sports", "health")
+        val randomQuery = randomQueries[Random().nextInt(randomQueries.size)]
+        searchArticles(randomQuery)
     }
 
-    // Create dummy data for books
-    val dummyBooks = listOf(
-        SearchAdapter.Book(0,"Marmut Merah Jambu", "Author 1", R.drawable.marmut,"This is the synopsis of Marmut Merah Jambu...", 4.5f),
-        SearchAdapter.Book(1,"Harry Potter", "Author 2", R.drawable.marmut,"This is the synopsis of Harry Potter...", 4.0f),
-        SearchAdapter.Book(2,"Game Of Thrones", "Author 3", R.drawable.marmut,"This is the synopsis of Game Of Thrones...", 4.8f),
-    )
-
-    // Function to search books
-    private fun searchBooks(query: String): List<SearchAdapter.Book> {
-        val books = dummyBooks.filter { it.title.contains(query, ignoreCase = true) }
-        Log.d("SearchActivity", "Search result: $books")
-        return books
-    }
-    private fun hideKeyboard(view: View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
-    override fun onItemClick(book: SearchAdapter.Book) {
-        val intent = Intent(this, BookDetailActivity::class.java).apply {
-            putExtra("BOOK_ID", book.id)
-            putExtra("BOOK_TITLE", book.title)
-            putExtra("BOOK_AUTHOR", book.author)
-            putExtra("BOOK_IMAGE", book.imageUrl)
-            putExtra("BOOK_SYNOPSIS", book.synopsis)
-            putExtra("BOOK_RATING", book.rating)
+    private fun searchArticles(query: String) {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response: Response<NewsResponse> = apiService.searchArticles(query, "db03c64333b7461da81b46755c01d5dc")
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        adapter.setData(it.articles)
+                    }
+                    progressBar.visibility = View.GONE // Menyembunyikan ProgressBar setelah data berhasil dimuat
+                } else {
+                    Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.GONE // Menyembunyikan ProgressBar jika terjadi kesalahan
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.GONE // Menyembunyikan ProgressBar jika terjadi kesalahan
+            }
         }
-        startActivity(intent)
     }
 
 }
