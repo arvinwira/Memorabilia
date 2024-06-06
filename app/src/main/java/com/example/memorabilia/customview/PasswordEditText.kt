@@ -12,9 +12,9 @@ class PasswordEditText(context: Context, attrs: AttributeSet) : AppCompatEditTex
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                val passwordPattern = "^(?=.*[A-Z])(?=.*\\d).{8,}$"
+                val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}\$"
                 if (!s.matches(passwordPattern.toRegex())) {
-                    error = "Password must contain at least 8 characters, including an uppercase letter and a number"
+                    error = "Password must be at least 8 characters and include a lowercase letter, an uppercase letter, and a digit"
                 } else {
                     error = null
                 }

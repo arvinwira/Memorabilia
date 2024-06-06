@@ -42,7 +42,7 @@ class BookDetailActivity : AppCompatActivity() {
 
         currentlyReadingBookDao = BookDatabase.getDatabase(this).currentlyReadingBookDao()
 
-        val article = intent.getParcelableExtra<Article>("article") as? Article
+        val article = intent.getParcelableExtra<Article>("article")
         val currentlyReadingBook = intent.getParcelableExtra<CurrentlyReadingBook>("book")
 
         if (article != null) {
@@ -75,7 +75,8 @@ class BookDetailActivity : AppCompatActivity() {
     private fun addToCurrentlyReading(article: Article?) {
         article?.let {
             val userId = getCurrentUserId() // Mendapatkan ID pengguna yang sedang login
-            val currentlyReadingBook = CurrentlyReadingBook(0, userId, it.title, it.author, it.urlToImage ?: "", 0)
+            val currentlyReadingBook = CurrentlyReadingBook(0, userId, it.title, it.author,
+                it.urlToImage, 0)
             CoroutineScope(Dispatchers.IO).launch {
                 currentlyReadingBookDao.insertCurrentlyReadingBook(currentlyReadingBook)
             }
@@ -95,7 +96,7 @@ class BookDetailActivity : AppCompatActivity() {
         val articleImageView = findViewById<ImageView>(R.id.bookImageView)
 
         titleTextView.text = article.title
-        authorTextView.text = article.author ?: "Unknown author"
+        authorTextView.text = article.author
         contentTextView.text = article.content
         Glide.with(this)
             .load(article.urlToImage)
@@ -110,7 +111,7 @@ class BookDetailActivity : AppCompatActivity() {
         val articleImageView = findViewById<ImageView>(R.id.bookImageView)
 
         titleTextView?.text = book.title
-        authorTextView?.text = book.author ?: "Unknown author"
+        authorTextView?.text = book.author
         Glide.with(this)
             .load(book.urlToImage)
             .placeholder(R.drawable.ic_launcher_background)

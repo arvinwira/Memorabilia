@@ -30,7 +30,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = articles[position]
         holder.titleTextView.text = article.title
-        holder.authorTextView.text = article.author ?: "Unknown author"
+        holder.authorTextView.text = article.author
         Glide.with(holder.itemView.context)
             .load(article.urlToImage)
             .apply(RequestOptions().placeholder(R.drawable.ic_launcher_background))

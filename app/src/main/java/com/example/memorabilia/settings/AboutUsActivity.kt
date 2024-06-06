@@ -3,8 +3,6 @@ package com.example.memorabilia.settings
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.memorabilia.R
 
 class AboutUsActivity : AppCompatActivity() {

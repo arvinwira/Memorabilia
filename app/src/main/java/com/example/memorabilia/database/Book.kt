@@ -29,6 +29,7 @@ data class CurrentlyReadingBook(
     val urlToImage: String,
     var progress: Int
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",

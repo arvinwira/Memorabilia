@@ -35,7 +35,7 @@ class CurrentlyReadingAdapter(private val currentlyReadingBookDao: CurrentlyRead
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val book = books[position]
         holder.titleTextView.text = book.title
-        holder.authorTextView.text = book.author ?: "Unknown author"
+        holder.authorTextView.text = book.author
         Glide.with(holder.itemView.context)
             .load(book.urlToImage)
             .apply(RequestOptions().placeholder(R.drawable.ic_launcher_background))
@@ -49,7 +49,6 @@ class CurrentlyReadingAdapter(private val currentlyReadingBookDao: CurrentlyRead
             it.context.startActivity(intent)
         }
 
-        Log.d("CurrentlyReadingAdapter", "Book: $book  ")
 
         holder.progressSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
