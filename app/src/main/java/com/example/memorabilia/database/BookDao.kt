@@ -3,24 +3,17 @@ package com.example.memorabilia.database
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
 interface CurrentlyReadingBookDao {
-    @Query("SELECT * FROM currentlyreadingbook")
-    suspend fun getAll(): List<CurrentlyReadingBook>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCurrentlyReadingBook(book: CurrentlyReadingBook)
 
-    @Insert
-    suspend fun insert(book: CurrentlyReadingBook)
-    @Delete
-    suspend fun delete(book: CurrentlyReadingBook)
-}
+    @Query("SELECT * FROM currently_reading WHERE userId = :userId")
+    suspend fun getAllBooks(userId:String): List<CurrentlyReadingBook>
 
-@Dao
-interface WantToReadBookDao {
-    @Query("SELECT * FROM wanttoreadbook")
-    suspend fun getAll(): List<WantToReadBook>
-
-    @Insert
-    suspend fun insert(book: WantToReadBook)
+    @Query("UPDATE currently_reading SET progress = :progress WHERE id = :id")
+    suspend fun updateBookProgress(id: Int, progress: Int)
 }

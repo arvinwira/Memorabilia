@@ -19,12 +19,10 @@ import com.example.memorabilia.R
 import com.example.memorabilia.api.ApiConfig
 import com.example.memorabilia.api.ApiService
 import com.example.memorabilia.api.response.NewsResponse
-//import com.example.memorabilia.bookdetail.BookDetailActivity
+import com.example.memorabilia.data.DummyData
 import com.example.memorabilia.main.MainActivity
 import com.example.memorabilia.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,11 +41,8 @@ class SearchActivity : AppCompatActivity() {
 
         apiService = ApiConfig.getNewsApi()
 
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
         bottomNavigationView.selectedItemId = R.id.searchnav
-
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homenav -> {
@@ -56,8 +51,8 @@ class SearchActivity : AppCompatActivity() {
                     true
                 }
                 R.id.searchnav -> {
-                    true                }
-
+                    true
+                }
                 R.id.profilenav -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     overridePendingTransition(0, 0)
@@ -67,9 +62,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-
-
-        val recyclerView = findViewById<RecyclerView>(R.id.rvSearch)
+        recyclerView = findViewById<RecyclerView>(R.id.rvSearch)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = SearchAdapter()
         recyclerView.adapter = adapter
@@ -109,15 +102,21 @@ class SearchActivity : AppCompatActivity() {
                     }
                     progressBar.visibility = View.GONE // Menyembunyikan ProgressBar setelah data berhasil dimuat
                 } else {
-                    Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
-                    progressBar.visibility = View.GONE // Menyembunyikan ProgressBar jika terjadi kesalahan
+                    Toast.makeText(applicationContext, "Failed to load articles from API, using dummy data", Toast.LENGTH_SHORT).show()
+                    loadDummyData()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
-                progressBar.visibility = View.GONE // Menyembunyikan ProgressBar jika terjadi kesalahan
+                Toast.makeText(applicationContext, "Failed to load articles from API, using dummy data", Toast.LENGTH_SHORT).show()
+                loadDummyData()
             }
         }
     }
 
+    private fun loadDummyData() {
+        val dummyArticles = DummyData.getDummyArticles()
+        adapter.setData(dummyArticles)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
+    }
 }

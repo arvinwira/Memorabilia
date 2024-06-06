@@ -14,7 +14,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.memorabilia.api.response.Article
 import com.example.memorabilia.bookdetail.BookDetailActivity
 
-//import com.example.memorabilia.bookdetail.BookDetailActivity
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ArticleViewHolder>() {
     private var articles: List<Article> = listOf()

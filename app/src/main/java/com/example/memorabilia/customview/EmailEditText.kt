@@ -1,10 +1,9 @@
-package com.example.memorabilia.register
+package com.example.memorabilia.customview
 
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Patterns
 import androidx.appcompat.widget.AppCompatEditText
 
 class EmailEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
@@ -13,7 +12,8 @@ class EmailEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(c
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (!Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
+                val emailPattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+$"
+                if (!s.matches(emailPattern.toRegex())) {
                     error = "Email is not valid"
                 } else {
                     error = null

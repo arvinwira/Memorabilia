@@ -1,13 +1,12 @@
 package com.example.memorabilia.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
-import android.content.Intent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import com.example.memorabilia.databinding.ActivityRegisterBinding
 import com.example.memorabilia.ViewModelFactory
+import com.example.memorabilia.databinding.ActivityRegisterBinding
 import com.example.memorabilia.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
@@ -31,6 +30,15 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
+            if (!isEmailValid(email) || !isPasswordValid(password)) {
+                AlertDialog.Builder(this)
+                    .setTitle("Signup Failed")
+                    .setMessage("Please enter a valid email and password.")
+                    .setPositiveButton("OK") { _, _ -> }
+                    .show()
+                return@setOnClickListener
+            }
+
             viewModel.register(name, email, password) { response ->
                 if (response != null && !response.error) {
                     AlertDialog.Builder(this)
@@ -52,5 +60,15 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        val emailPattern = "^[A-Za-z\\d+_.-]+@[A-Za-z\\d.-]+$"
+        return email.matches(emailPattern.toRegex())
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        val passwordPattern = "^(?=.*[A-Z])(?=.*\\d).{8,}$"
+        return password.matches(passwordPattern.toRegex())
     }
 }

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memorabilia.R
 import com.example.memorabilia.database.BookDatabase
-import com.example.memorabilia.database.WantToReadBook
 import com.example.memorabilia.search.SearchAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

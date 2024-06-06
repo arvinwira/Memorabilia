@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.memorabilia.R
 import com.example.memorabilia.api.response.Article
+import com.example.memorabilia.bookdetail.BookDetailActivity
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
     private var articles: List<Article> = listOf()
@@ -35,9 +36,9 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
             .apply(RequestOptions().placeholder(R.drawable.ic_launcher_background))
             .into(holder.articleImageView)
         holder.itemView.setOnClickListener {
-//            val intent = Intent(it.context, DetailActivity::class.java)
-//            intent.putExtra("article", article)
-//            it.context.startActivity(intent)
+            val intent = Intent(it.context, BookDetailActivity::class.java)
+            intent.putExtra("article", article)
+            it.context.startActivity(intent)
         }
     }
 

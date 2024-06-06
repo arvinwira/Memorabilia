@@ -1,4 +1,4 @@
-package com.example.memorabilia.register
+package com.example.memorabilia.customview
 
 import android.content.Context
 import android.text.Editable
@@ -12,8 +12,9 @@ class PasswordEditText(context: Context, attrs: AttributeSet) : AppCompatEditTex
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.length < 8) {
-                    error = "Password must contain at least 8 characters"
+                val passwordPattern = "^(?=.*[A-Z])(?=.*\\d).{8,}$"
+                if (!s.matches(passwordPattern.toRegex())) {
+                    error = "Password must contain at least 8 characters, including an uppercase letter and a number"
                 } else {
                     error = null
                 }

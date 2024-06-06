@@ -3,14 +3,12 @@ package com.example.memorabilia.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.example.memorabilia.ViewModelFactory
 import com.example.memorabilia.data.UserModel
 import com.example.memorabilia.databinding.ActivityLoginBinding
 import com.example.memorabilia.main.MainActivity
-
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -31,6 +29,15 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+
+            if (!isEmailValid(email) || !isPasswordValid(password)) {
+                AlertDialog.Builder(this)
+                    .setTitle("Login Failed")
+                    .setMessage("Please enter a valid email and password.")
+                    .setPositiveButton("OK") { _, _ -> }
+                    .show()
+                return@setOnClickListener
+            }
 
             viewModel.login(email, password) { response ->
                 if (response != null && !response.error) {
@@ -58,9 +65,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun isEmailValid(email: String): Boolean {
+        val emailPattern = "^[A-Za-z\\d+_.-]+@[A-Za-z\\d.-]+$"
+        return email.matches(emailPattern.toRegex())
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        val passwordPattern = "^(?=.*[A-Z])(?=.*\\d).{8,}$"
+        return password.matches(passwordPattern.toRegex())
+    }
+
     override fun onDestroy() {
         alertDialog?.dismiss()
         super.onDestroy()
     }
-
-    }
+}

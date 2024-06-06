@@ -5,19 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.memorabilia.R
 import com.example.memorabilia.ViewModelFactory
 import com.example.memorabilia.api.ApiConfig
 import com.example.memorabilia.api.ApiService
 import com.example.memorabilia.api.response.NewsResponse
+import com.example.memorabilia.currentlyreading.CurrentlyReadingActivity
+import com.example.memorabilia.data.DummyData
 import com.example.memorabilia.data.Repository
 import com.example.memorabilia.databinding.ActivityMainBinding
 import com.example.memorabilia.di.Injection
@@ -36,6 +36,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var repository: Repository
     private lateinit var apiService: ApiService
     private lateinit var adapter: MainAdapter
 
@@ -44,12 +45,13 @@ class MainActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var repository: Repository
     private lateinit var themeViewModel: ThemeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        repository = Injection.provideRepository(applicationContext)
 
         // Initialize binding
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -92,8 +94,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Uncomment the following if you want to use these buttons
-        /*
+
         val buttonCurrentlyReading = binding.buttonCurrentlyReading
         buttonCurrentlyReading.setOnClickListener {
             val intent = Intent(this, CurrentlyReadingActivity::class.java)
@@ -101,53 +102,47 @@ class MainActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        val buttonWantToRead = binding.buttonWantToRead
-        buttonWantToRead.setOnClickListener {
-            val intent = Intent(this, WantToReadActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+//        val buttonWantToRead = binding.buttonWantToRead
+//        buttonWantToRead.setOnClickListener {
+//            val intent = Intent(this, WantToReadActivity::class.java)
+//            startActivity(intent)
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+//        }
+//
+//        val buttonFinished = binding.buttonFinishedReading
+//        buttonFinished.setOnClickListener {
+//            val intent = Intent(this, FinishedReadingActivity::class.java)
+//            startActivity(intent)
+//            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+//        }
 
-        val buttonFinished = binding.buttonFinishedReading
-        buttonFinished.setOnClickListener {
-            val intent = Intent(this, FinishedReadingActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-        }
-        */
 
-        showCategorySelectionDialog()
+        // Show books category
+        showBooksArticles()
     }
 
-    private fun showCategorySelectionDialog() {
-        val categories = arrayOf("kamal", "Business", "Technology", "Entertainment", "Sports", "Health")
-        val selectedCategories = BooleanArray(categories.size)
-        AlertDialog.Builder(this)
-            .setTitle("Select News Categories")
-            .setMultiChoiceItems(categories, selectedCategories) { _, _, _ -> }
-            .setPositiveButton("OK") { _, _ ->
-                val selected = categories.filterIndexed { index, _ -> selectedCategories[index] }
-                val query = selected.joinToString("+").toLowerCase(Locale.ROOT)
-                searchArticles(query)
-            }
-            .show()
-    }
-
-    private fun searchArticles(query: String) {
+    private fun showBooksArticles() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                val response: Response<NewsResponse> = apiService.searchArticles(query, "db03c64333b7461da81b46755c01d5dc")
+                val response: Response<NewsResponse> = apiService.searchArticles("books", "db03c64333b7461da81b46755c01d5dc")
                 if (response.isSuccessful) {
                     val body = response.body()
                     body?.let {
                         adapter.setData(it.articles)
+                    } ?: run {
+                        // Use dummy data if response body is null
+                        adapter.setData(DummyData.getDummyArticles())
                     }
                 } else {
-                    Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
+                    // Use dummy data if API call is not successful
+                    adapter.setData(DummyData.getDummyArticles())
+                    Toast.makeText(applicationContext, "Failed to load articles from API", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(applicationContext, "Failed to load articles", Toast.LENGTH_SHORT).show()
+                // Use dummy data if an exception occurs
+                adapter.setData(DummyData.getDummyArticles())
+                Toast.makeText(applicationContext, "Failed to load articles. Using dummy data.", Toast.LENGTH_SHORT).show()
             }
         }
     }
