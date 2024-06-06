@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -28,8 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+val Context.dataStore:   DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
 class BookDetailActivity : AppCompatActivity() {
     private lateinit var currentlyReadingBookDao: CurrentlyReadingBookDao
@@ -74,10 +76,29 @@ class BookDetailActivity : AppCompatActivity() {
 
     private fun addToCurrentlyReading(article: Article?) {
         article?.let {
-            val userId = getCurrentUserId() // Mendapatkan ID pengguna yang sedang login
-            val currentlyReadingBook = CurrentlyReadingBook(0, userId, it.title, it.author, it.urlToImage ?: "", 0)
+            val userId = getCurrentUserId() // Get the ID of the currently logged in user
+            val currentlyReadingBook =
+                CurrentlyReadingBook(0, userId, it.title, it.author, it.urlToImage ?: "", 0)
             CoroutineScope(Dispatchers.IO).launch {
-                currentlyReadingBookDao.insertCurrentlyReadingBook(currentlyReadingBook)
+                // Check if the book already exists in the currently reading list
+                val existingBook = currentlyReadingBookDao.getBookByTitleAndAuthor(
+                    userId,
+                    it.title,
+                    it.author ?: ""
+                )
+                if (existingBook != null) {
+                    // If the book exists, show a message to the user
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@BookDetailActivity,
+                            "This book is already in your currently reading list.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    // If the book does not exist, insert it into the database
+                    currentlyReadingBookDao.insertCurrentlyReadingBook(currentlyReadingBook)
+                }
             }
         }
     }

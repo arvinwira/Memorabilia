@@ -16,4 +16,8 @@ interface CurrentlyReadingBookDao {
 
     @Query("UPDATE currently_reading SET progress = :progress WHERE id = :id")
     suspend fun updateBookProgress(id: Int, progress: Int)
+    @Query("SELECT * FROM currently_reading WHERE userId = :userId AND title = :title AND author = :author LIMIT 1")
+    suspend fun getBookByTitleAndAuthor(userId: String, title: String, author: String): CurrentlyReadingBook?
+    @Delete
+    suspend fun delete(book: CurrentlyReadingBook)
 }
